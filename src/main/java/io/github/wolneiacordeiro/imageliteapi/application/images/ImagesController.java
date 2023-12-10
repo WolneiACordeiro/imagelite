@@ -13,6 +13,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.io.IOException;
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/v1/images")
@@ -33,19 +34,31 @@ public class ImagesController {
         URI imageUri = buildImageURL(savedImage);
         return ResponseEntity.created(imageUri).build();
     }
-@GetMapping("{id}")
-public ResponseEntity<byte[]> getImage(@PathVariable String id){
- var possibleImage = service.getById(id);
- if(possibleImage.isEmpty()){
-     return ResponseEntity.notFound().build();
- }
-    var image = possibleImage.get();
-    HttpHeaders  headers = new HttpHeaders();
-    headers.setContentType(image.getExtension().getMediaType());
-    headers.setContentLength(image.getSize());
-    headers.setContentDispositionFormData("inline; filename=\"" + image.getFileName() + "\"", image.getFileName());
-    return new ResponseEntity<>(image.getFile(), headers, HttpStatus.OK);
-}
+    @GetMapping("{id}")
+    public ResponseEntity<byte[]> getImage(@PathVariable String id){
+     var possibleImage = service.getById(id);
+     if(possibleImage.isEmpty()){
+         return ResponseEntity.notFound().build();
+     }
+        var image = possibleImage.get();
+        HttpHeaders  headers = new HttpHeaders();
+        headers.setContentType(image.getExtension().getMediaType());
+        headers.setContentLength(image.getSize());
+        headers.setContentDispositionFormData("inline; filename=\"" + image.getFileName() + "\"", image.getFileName());
+        return new ResponseEntity<>(image.getFile(), headers, HttpStatus.OK);
+    }
+    @GetMapping
+    public ResponseEntity<List<ImageDTO>> search(
+           @RequestParam(value = "extension", required = false) String extension,
+           @RequestParam(value = "query", required = false) String query){
+        var result = service.search(ImageExtension.valueOf(extension), query);
+        var images = result.stream().map(image -> {
+            var url = buildImageURL(image);
+            return mapper.imageToDTO(image, url.toString());
+        }).collect(Collectors.toList());
+        return ResponseEntity.ok(images);
+    }
+
     private URI buildImageURL(Image image){
         String imagePath = "/" + image.getId();
         return ServletUriComponentsBuilder
