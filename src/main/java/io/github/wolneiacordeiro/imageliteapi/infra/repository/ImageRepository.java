@@ -11,8 +11,8 @@ import java.util.List;
 
 public interface ImageRepository extends JpaRepository<Image, String>, JpaSpecificationExecutor<Image> {
     default List<Image> findByExtensionAndNameOrTagsLike(ImageExtension extension, String query){
-        Specification<Image> conjuction = (root, q, criteriaBuilder) -> criteriaBuilder.conjunction();
-        Specification<Image> spec = Specification.where(conjuction);
+        Specification<Image> conjunction = (root, q, criteriaBuilder) -> criteriaBuilder.conjunction();
+        Specification<Image> spec = Specification.where(conjunction);
         if(extension != null){
             Specification<Image> extensionEqual = (root, q, cb) -> cb.equal(root.get("extension"), extension);
             spec = spec.and(extensionEqual);
