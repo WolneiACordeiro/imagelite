@@ -17,10 +17,10 @@ export const Template: React.FC<TemplateProps> = (props: TemplateProps) => {
 
 const Header: React.FC = () => {
     return (
-        <header className="bg-indigo-950 text-white py-3">
-            <div className="container mx-auto flex justify-between items-center px-4">
-                <div className="text-3x1 font-bold">
-                    <h1 className="text-3x1 font-bold">ImageLite</h1>
+        <header className={"bg-indigo-950 text-white py-3"}>
+            <div className={"container mx-auto flex justify-between items-center px-4"}>
+                <div className={"text-3x1 font-bold"}>
+                    <h1 className={"text-3x1 font-bold"}>ImageLite</h1>
                 </div>
             </div>
         </header>
