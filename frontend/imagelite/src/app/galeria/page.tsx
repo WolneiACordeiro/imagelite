@@ -1,21 +1,37 @@
+'use client'
 import { Template, ImageCard } from '@/components'
+import { useImageService } from '@/resources/image/image.service'
+import {useState} from 'react'
+import {Image} from "@/resources/image/image.resource";
 export default function GaleriaPage(){
+    const useService = useImageService();
+    const [images, setImages] = useState<Image[]>([])
+    async function searchImages(){
+        const result = await useService.buscar();
+        setImages(result);
+        console.table(result);
+    }
+
+    function renderImageCard(image: Image){
+        return (
+            <ImageCard nome={image.name}
+                       src={image.url}
+                       tamanho={image.size}
+                       dataUpload={image.uploadDate}/>
+        )
+    }
+
+    function renderImageCards(){
+        return images.map(image => renderImageCard(image))
+    }
+
     return (
         <Template>
-            <h1>Galeria</h1>
+            <button className={"bg-gray-500"} onClick={searchImages}>Clique para mudar</button>
             <section className={"grid grid-cols-4 gap-8"}>
-                <ImageCard nome={'Globe'} tamanho={'10MB'} dataUpload={'01/01/2024'} src={'https://static.vecteezy.com/system/resources/thumbnails/025/284/015/small_2x/close-up-growing-beautiful-forest-in-glass-ball-and-flying-butterflies-in-nature-outdoors-spring-season-concept-generative-ai-photo.jpg'}/>
-                <ImageCard nome={'Globe'} tamanho={'10MB'} dataUpload={'01/01/2024'} src={'https://static.vecteezy.com/system/resources/thumbnails/025/284/015/small_2x/close-up-growing-beautiful-forest-in-glass-ball-and-flying-butterflies-in-nature-outdoors-spring-season-concept-generative-ai-photo.jpg'}/>
-                <ImageCard nome={'Globe'} tamanho={'10MB'} dataUpload={'01/01/2024'} src={'https://static.vecteezy.com/system/resources/thumbnails/025/284/015/small_2x/close-up-growing-beautiful-forest-in-glass-ball-and-flying-butterflies-in-nature-outdoors-spring-season-concept-generative-ai-photo.jpg'}/>
-                <ImageCard nome={'Globe'} tamanho={'10MB'} dataUpload={'01/01/2024'} src={'https://static.vecteezy.com/system/resources/thumbnails/025/284/015/small_2x/close-up-growing-beautiful-forest-in-glass-ball-and-flying-butterflies-in-nature-outdoors-spring-season-concept-generative-ai-photo.jpg'}/>
-                <ImageCard nome={'Globe'} tamanho={'10MB'} dataUpload={'01/01/2024'} src={'https://static.vecteezy.com/system/resources/thumbnails/025/284/015/small_2x/close-up-growing-beautiful-forest-in-glass-ball-and-flying-butterflies-in-nature-outdoors-spring-season-concept-generative-ai-photo.jpg'}/>
-                <ImageCard nome={'Globe'} tamanho={'10MB'} dataUpload={'01/01/2024'} src={'https://static.vecteezy.com/system/resources/thumbnails/025/284/015/small_2x/close-up-growing-beautiful-forest-in-glass-ball-and-flying-butterflies-in-nature-outdoors-spring-season-concept-generative-ai-photo.jpg'}/>
-                <ImageCard nome={'Globe'} tamanho={'10MB'} dataUpload={'01/01/2024'} src={'https://static.vecteezy.com/system/resources/thumbnails/025/284/015/small_2x/close-up-growing-beautiful-forest-in-glass-ball-and-flying-butterflies-in-nature-outdoors-spring-season-concept-generative-ai-photo.jpg'}/>
-                <ImageCard nome={'Globe'} tamanho={'10MB'} dataUpload={'01/01/2024'} src={'https://static.vecteezy.com/system/resources/thumbnails/025/284/015/small_2x/close-up-growing-beautiful-forest-in-glass-ball-and-flying-butterflies-in-nature-outdoors-spring-season-concept-generative-ai-photo.jpg'}/>
-                <ImageCard nome={'Globe'} tamanho={'10MB'} dataUpload={'01/01/2024'} src={'https://static.vecteezy.com/system/resources/thumbnails/025/284/015/small_2x/close-up-growing-beautiful-forest-in-glass-ball-and-flying-butterflies-in-nature-outdoors-spring-season-concept-generative-ai-photo.jpg'}/>
-                <ImageCard nome={'Globe'} tamanho={'10MB'} dataUpload={'01/01/2024'} src={'https://static.vecteezy.com/system/resources/thumbnails/025/284/015/small_2x/close-up-growing-beautiful-forest-in-glass-ball-and-flying-butterflies-in-nature-outdoors-spring-season-concept-generative-ai-photo.jpg'}/>
-                <ImageCard nome={'Globe'} tamanho={'10MB'} dataUpload={'01/01/2024'} src={'https://static.vecteezy.com/system/resources/thumbnails/025/284/015/small_2x/close-up-growing-beautiful-forest-in-glass-ball-and-flying-butterflies-in-nature-outdoors-spring-season-concept-generative-ai-photo.jpg'}/>
-                <ImageCard nome={'Globe'} tamanho={'10MB'} dataUpload={'01/01/2024'} src={'https://static.vecteezy.com/system/resources/thumbnails/025/284/015/small_2x/close-up-growing-beautiful-forest-in-glass-ball-and-flying-butterflies-in-nature-outdoors-spring-season-concept-generative-ai-photo.jpg'}/>
+                {
+                    renderImageCards()
+                }
             </section>
         </Template>
     )
