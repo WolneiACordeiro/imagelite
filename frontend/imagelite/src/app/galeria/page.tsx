@@ -8,6 +8,7 @@ export default function GaleriaPage(){
     const [images, setImages] = useState<Image[]>([])
     const [query, setQuery] = useState<string>('')
     const [extension, setExtension] = useState<string>('')
+    const [loading, setLoading] = useState<boolean>(false)
     async function searchImages(){
         console.log("Valor digitado:", query)
         const result = await useService.buscar(query, extension);
@@ -20,6 +21,7 @@ export default function GaleriaPage(){
                        nome={image.name}
                        src={image.url}
                        tamanho={image.size}
+                       extension={image.extension}
                        dataUpload={image.uploadDate}/>
         )
     }
@@ -29,7 +31,7 @@ export default function GaleriaPage(){
     }
 
     return (
-        <Template>
+        <Template loading={loading}>
             <section className={"flex flex-col items-center justify-center my-5"}>
                 <div className={"flex space-x-4"}>
                     <input type={"text"}
@@ -41,8 +43,8 @@ export default function GaleriaPage(){
                         <option value={"JPEG"}>JPEG</option>
                         <option value={"GIF"}>GIF</option>
                     </select>
-                    <button className={"bg-blue-500 text-white px-4 py-2 rounded-lg"} onClick={searchImages}>Search</button>
-                    <button className={"bg-yellow-500 text-white px-4 py-2 rounded-lg"}>Add New</button>
+                    <button className={"bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-300"} onClick={searchImages}>Search</button>
+                    <button className={"bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-300"}>Add New</button>
                 </div>
             </section>
             <section className={"grid grid-cols-4 gap-8"}>
