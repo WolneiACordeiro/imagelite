@@ -35,7 +35,7 @@ export default function GaleriaPage(){
         <Template loading={loading}>
             <section className={"flex flex-col items-center justify-center my-5"}>
                 <div className={"flex space-x-4"}>
-                    <InputText onChange={event => setQuery(event.target.value)}/>
+                    <InputText placeholder={"Type Names or Tags"} onChange={event => setQuery(event.target.value)}/>
                     <select onChange={event => setExtension(event.target.value)} className={"border px-4 py-2 rounded-lg text-gray-900"}>
                         <option>All Formats</option>
                         <option value={"PNG"}>PNG</option>
