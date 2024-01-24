@@ -73,11 +73,16 @@
       <workItem from="1704157465467" duration="50000" />
       <workItem from="1704467855124" duration="196000" />
       <workItem from="1704741782886" duration="19000" />
+      <workItem from="1706067967595" duration="50000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="dependencySupport" implementationName="executable:docker" />
+    <option featureType="dependencySupport" implementationName="executable:kubectl" />
   </component>
   <component name="VcsManagerConfiguration">
     <ignored-roots>
