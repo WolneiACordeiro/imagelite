@@ -40,4 +40,5 @@ public class JwtService {
         claims.put("name", user.getName());
         return claims;
     }
+
 }
