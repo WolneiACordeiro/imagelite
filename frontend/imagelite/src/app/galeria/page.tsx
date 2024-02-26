@@ -1,5 +1,5 @@
 'use client'
-import {Template, ImageCard, Button, InputText, useNotification} from '@/components'
+import {Template, ImageCard, Button, InputText, useNotification, AuthenticatedPage} from '@/components'
 import { useImageService } from '@/resources/image/image.service'
 import {useState} from 'react'
 import {Image} from "@/resources/image/image.resource";
@@ -37,6 +37,7 @@ export default function GaleriaPage(){
     }
 
     return (
+        <AuthenticatedPage>
         <Template loading={loading}>
             <section className={"flex flex-col items-center justify-center my-5"}>
                 <div className={"flex space-x-4"}>
@@ -59,5 +60,6 @@ export default function GaleriaPage(){
                 }
             </section>
         </Template>
+        </AuthenticatedPage>
     )
 }
