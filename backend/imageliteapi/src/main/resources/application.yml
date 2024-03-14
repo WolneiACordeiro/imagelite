@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5433/imagelite
+    url: jdbc:postgresql://localhost:5432/imagelite
     username: postgres
-    password: postgres
+    password: 123
   jpa:
     database: POSTGRESQL
     hibernate:
