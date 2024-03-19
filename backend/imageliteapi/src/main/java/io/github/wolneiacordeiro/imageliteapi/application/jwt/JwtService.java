@@ -2,7 +2,7 @@ package io.github.wolneiacordeiro.imageliteapi.application.jwt;
 
 import io.github.wolneiacordeiro.imageliteapi.domain.AccessToken;
 import io.github.wolneiacordeiro.imageliteapi.domain.entity.User;
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -41,4 +41,15 @@ public class JwtService {
         return claims;
     }
 
+    public String getEmailFromToken (String tokenJwt){
+        try {
+            JwtParser build = Jwts.parser()
+                    .verifyWith(keyGenerator.getKey()).build();
+            Jws<Claims> jwsClaims = build.parseSignedClaims(tokenJwt);
+            Claims claims = jwsClaims.getPayload();
+            return claims.getSubject();
+        } catch (JwtException e){
+            throw new InvalidTokenException(e.getMessage());
+        }
+    }
 }
